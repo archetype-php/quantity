@@ -1,0 +1,50 @@
+{
+    "name": "archetype/quantity",
+    "type": "library",
+    "description": "Quantity archetype: quantity is the amount of something measured in a given unit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arkadiusz Kondas",
+            "email": "arkadiusz.kondas@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "ext-bcmath": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^3.2",
+        "phpstan/phpstan": "^0.12.99"
+    },
+    "autoload": {
+        "psr-4": {
+            "Archetype\\Quantity\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Archetype\\Quantity\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "build": [
+            "@check-cs",
+            "@phpstan",
+            "@phpunit"
+        ],
+        "check-cs": [
+            "php-cs-fixer fix --dry-run --diff"
+        ],
+        "fix-cs": [
+            "php-cs-fixer fix"
+        ],
+        "phpstan": [
+            "phpstan analyse src tests --level=max"
+        ],
+        "phpunit": [
+            "phpunit"
+        ]
+    }
+}
