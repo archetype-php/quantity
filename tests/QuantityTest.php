@@ -52,7 +52,8 @@ class QuantityTest extends TestCase
      */
     public function addProvider(): iterable
     {
-        yield 'integers' => ['0', '1', '1'];
+        yield 'integers' => ['0', '1', '1.00'];
+        yield 'floats' => ['0.1', '0.2', '0.30'];
     }
 
     /**
@@ -72,6 +73,14 @@ class QuantityTest extends TestCase
      */
     public function subtractProvider(): iterable
     {
-        yield 'integers' => ['5', '4', '1'];
+        yield 'integers' => ['5', '4', '1.00'];
+        yield 'floats' => ['0.3', '0.2', '0.10'];
+    }
+
+    public function testScaleValidation(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        Quantity::fromString('1', -1);
     }
 }
