@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Archetype\Quantity\Tests;
 
 use Archetype\Quantity\Quantity;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Quantity::class)]
 class QuantityTest extends TestCase
 {
-    /**
-     * @dataProvider numericStringProvider
-     */
+    #[DataProvider('numericStringProvider')]
     public function testQuantityNumericAmount(string $amount): void
     {
         self::assertSame($amount, Quantity::fromString($amount)->amount());
@@ -20,7 +21,7 @@ class QuantityTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function numericStringProvider(): iterable
+    public static function numericStringProvider(): iterable
     {
         yield 'integer' => ['123'];
         yield 'float' => ['123.99'];
@@ -35,9 +36,7 @@ class QuantityTest extends TestCase
         Quantity::fromString('hello');
     }
 
-    /**
-     * @dataProvider addProvider
-     */
+    #[DataProvider('addProvider')]
     public function testAdd(string $base, string $addend, string $result): void
     {
         $base = Quantity::fromString($base);
@@ -50,15 +49,13 @@ class QuantityTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function addProvider(): iterable
+    public static function addProvider(): iterable
     {
         yield 'integers' => ['0', '1', '1.00'];
         yield 'floats' => ['0.1', '0.2', '0.30'];
     }
 
-    /**
-     * @dataProvider subtractProvider
-     */
+    #[DataProvider('subtractProvider')]
     public function testSubtract(string $base, string $subtrahend, string $result): void
     {
         $base = Quantity::fromString($base);
@@ -71,7 +68,7 @@ class QuantityTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function subtractProvider(): iterable
+    public static function subtractProvider(): iterable
     {
         yield 'integers' => ['5', '4', '1.00'];
         yield 'floats' => ['0.3', '0.2', '0.10'];
@@ -84,9 +81,7 @@ class QuantityTest extends TestCase
         Quantity::fromString('1', -1);
     }
 
-    /**
-     * @dataProvider multiplicationProvider
-     */
+    #[DataProvider('multiplicationProvider')]
     public function testMultiplication(string $base, string $multiplier, string $result): void
     {
         $base = Quantity::fromString($base);
@@ -99,7 +94,7 @@ class QuantityTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function multiplicationProvider(): iterable
+    public static function multiplicationProvider(): iterable
     {
         yield 'integers' => ['5', '4', '20.00'];
         yield 'one negative' => ['-5', '4', '-20.00'];
