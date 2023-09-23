@@ -83,4 +83,27 @@ class QuantityTest extends TestCase
 
         Quantity::fromString('1', -1);
     }
+
+    /**
+     * @dataProvider multiplicationProvider
+     */
+    public function testMultiplication(string $base, string $multiplier, string $result): void
+    {
+        $base = Quantity::fromString($base);
+        $product = $base->multiply(Quantity::fromString($multiplier));
+
+        self::assertSame($result, $product->amount());
+        self::assertNotSame($base, $product);
+    }
+
+    /**
+     * @return iterable<array<string>>
+     */
+    public function multiplicationProvider(): iterable
+    {
+        yield 'integers' => ['5', '4', '20.00'];
+        yield 'one negative' => ['-5', '4', '-20.00'];
+        yield 'two negatives' => ['-5', '-4', '20.00'];
+        yield 'floats' => ['0.3', '0.2', '0.06'];
+    }
 }

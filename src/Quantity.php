@@ -18,7 +18,7 @@ class Quantity
     public static function fromString(string $amount, int $scale = 2): self
     {
         if (!is_numeric($amount)) {
-            throw new \InvalidArgumentException('Invalid quantity amount, numeric string required.');
+            throw new \InvalidArgumentException('Invalid quantity amount, numeric string required');
         }
         if ($scale < 0) {
             throw new \InvalidArgumentException('Scale must be equal or higher than zero');
@@ -40,5 +40,10 @@ class Quantity
     public function subtract(self $quantity): self
     {
         return new self(bcsub($this->amount, $quantity->amount, $this->scale), $this->scale);
+    }
+
+    public function multiply(self $quantity): self
+    {
+        return new self(bcmul($this->amount, $quantity->amount, $this->scale), $this->scale);
     }
 }
